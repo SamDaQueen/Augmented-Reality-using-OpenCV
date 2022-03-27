@@ -1,0 +1,2 @@
+D:\Documents\Northeastern\Courses\PRCV-5330\MinGW\mingw64\bin\ar.exe qc libCalibration.a CMakeFiles/Calibration.dir/calibrate.cpp.obj
+D:\Documents\Northeastern\Courses\PRCV-5330\MinGW\mingw64\bin\ranlib.exe libCalibration.a
