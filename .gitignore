@@ -1,0 +1,9 @@
+/.vscode
+/bin
+/build
+/checkerboard-converted.pdf
+/checkerboard.png
+/CMakeCache.txt
+/CMakeFiles
+/cmake_install.cmake
+/Makefile
