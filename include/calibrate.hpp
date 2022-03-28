@@ -21,6 +21,12 @@
 using namespace cv;
 using namespace std;
 
-int getLastCorners(Mat &src, vector<Point2f> &lastcorners);
+bool getLastCorners(Mat &src, vector<Point2f> &lastcorners);
 
-int getPoints(vector<Vec3f> &points);
+int getPoints(vector<Vec3f> &points, int z);
+
+int writeParametersToCSV(Mat &cameraMatrix, Mat &distCoeffs, Mat &rvecs,
+                         Mat &tvecs);
+
+int readParametersFromCSV(vector<float> &cameraMatrix,
+                          vector<float> &distCoeffs);

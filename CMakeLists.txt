@@ -7,10 +7,16 @@ include_directories(${OpenCV_INCLUDE-DIRECTORIES})
 link_libraries(${OpenCV_LIBS})
 
 add_subdirectory(include)
-add_executable(main ./src/main.cpp)
+add_executable(calibrate_camera ./src/calibrate_camera.cpp)
+add_executable(create_object ./src/create_object.cpp)
 
-target_link_libraries(main Calibration)
-target_include_directories(main PUBLIC
+target_link_libraries(calibrate_camera Calibration)
+target_include_directories(calibrate_camera PUBLIC
+"${PROJECT_BINARY_DIR}"
+"${PROJECT_SOURCE_DIR}/include")
+
+target_link_libraries(create_object Calibration)
+target_include_directories(create_object PUBLIC
 "${PROJECT_BINARY_DIR}"
 "${PROJECT_SOURCE_DIR}/include")
 
