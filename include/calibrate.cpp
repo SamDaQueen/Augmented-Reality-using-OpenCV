@@ -47,8 +47,7 @@ int getPoints(vector<Vec3f> &points, int z) {
   return 0;
 }
 
-int writeParametersToCSV(Mat &cameraMatrix, Mat &distCoeffs, Mat &rvecs,
-                         Mat &tvecs) {
+int writeParametersToCSV(Mat &cameraMatrix, Mat &distCoeffs) {
   // write the parameters to a csv file
   char filename[100] = "./data/parameters.csv";
   char buffer[100];
@@ -76,28 +75,6 @@ int writeParametersToCSV(Mat &cameraMatrix, Mat &distCoeffs, Mat &rvecs,
     else
       fprintf(fp, "%s\n", buffer);  // EOL
   }
-  // write the rotation vectors
-  for (unsigned int i = 0; i < rvecs.rows; i++) {
-    for (unsigned int j = 0; j < 3; j++) {
-      sprintf(buffer, "%.4f", rvecs.at<double>(i, j));
-      if (j < 2)
-        fprintf(fp, "%s,", buffer);
-      else
-        fprintf(fp, "%s", buffer);
-    }
-  }
-  fwrite("\n", 1, 1, fp);  // EOL
-  // write the translation vectors
-  for (unsigned int i = 0; i < tvecs.rows; i++) {
-    for (unsigned int j = 0; j < 3; j++) {
-      sprintf(buffer, "%.4f", tvecs.at<double>(i, j));
-      if (j < 2)
-        fprintf(fp, "%s,", buffer);
-      else
-        fprintf(fp, "%s", buffer);
-    }
-  }
-  fwrite("\n", 1, 1, fp);  // EOL
 
   fclose(fp);
   return 0;
@@ -163,5 +140,30 @@ int readParametersFromCSV(vector<float> &cameraMatrix,
     }
     distCoeffs.push_back(fval);
   }
+  return 0;
+}
+
+int getHarrisCorners(Mat &src) {
+  Mat dst, dst_norm, dst_norm_scaled;
+  dst = Mat::zeros(src.size(), CV_32FC1);
+  // convert to grayscale
+  Mat gray;
+  cvtColor(src, gray, COLOR_BGR2GRAY);
+  // detect corners
+  cornerHarris(gray, dst, 2, 3, 0.04, BORDER_DEFAULT);
+  // dilate(dst, dst, Mat(), Point(-1, -1));
+  normalize(dst, dst_norm, 0, 255, NORM_MINMAX, CV_32FC1, Mat());
+  convertScaleAbs(dst_norm, dst_norm_scaled);
+
+  for (int j = 0; j < dst_norm.rows; j++) {
+    for (int i = 0; i < dst_norm.cols; i++) {
+      if ((int)dst_norm.at<float>(j, i) > 200) {
+        circle(src, Point(i, j), 5, Scalar(0, 0, 255), 2, 8, 0);
+      }
+    }
+  }
+
+  // src = dst_norm_scaled;
+
   return 0;
 }

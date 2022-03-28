@@ -25,8 +25,9 @@ bool getLastCorners(Mat &src, vector<Point2f> &lastcorners);
 
 int getPoints(vector<Vec3f> &points, int z);
 
-int writeParametersToCSV(Mat &cameraMatrix, Mat &distCoeffs, Mat &rvecs,
-                         Mat &tvecs);
+int writeParametersToCSV(Mat &cameraMatrix, Mat &distCoeffs);
 
 int readParametersFromCSV(vector<float> &cameraMatrix,
                           vector<float> &distCoeffs);
+
+int getHarrisCorners(Mat &src);

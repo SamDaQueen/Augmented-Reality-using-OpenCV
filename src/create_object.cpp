@@ -1,7 +1,7 @@
 /**
  * @file create_object.cpp
  * @author Samreen
- * @brief uses the parameters stored in the csv file to draw object on
+ * @brief uses the parameters stored in the csv file to draw 3-D object on
  * chessboard.
  * @version 0.1
  * @date 2022-03-27
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
   VideoCapture *capdev;
 
   // open the video device
-  capdev = new VideoCapture(1);
+  capdev = new VideoCapture(2);
   if (!capdev->isOpened()) {
     printf("Unable to open video device\n");
     return (-1);
@@ -95,16 +95,16 @@ int main(int argc, char *argv[]) {
                false, SOLVEPNP_EPNP);
 
       // print the rotation and translation vectors
-      //   for (int i = 0; i < rvecs.rows; i++) {
-      //     cout << "Rotation Vector: ";
-      //     cout << rvecs.at<float>(i, 0) << ", " << rvecs.at<float>(i, 1) <<
-      //     ", "
-      //          << rvecs.at<float>(i, 2);
-      //     cout << "; Translation Vector: ";
-      //     cout << tvecs.at<float>(i, 0) << ", " << tvecs.at<float>(i, 1) <<
-      //     ", "
-      //          << tvecs.at<float>(i, 2) << endl;
-      //   }
+      // for (int i = 0; i < rvecs.rows; i++) {
+      //   cout << "Rotation Vector: ";
+      //   cout << rvecs.at<float>(i, 0) << ", " << rvecs.at<float>(i, 1) << ",
+      //   "
+      //        << rvecs.at<float>(i, 2);
+      //   cout << "; Translation Vector: ";
+      //   cout << tvecs.at<float>(i, 0) << ", " << tvecs.at<float>(i, 1) << ",
+      //   "
+      //        << tvecs.at<float>(i, 2) << endl;
+      // }
 
       // draw the projected corner points
       circle(frame, lastcorners[0], 5, Scalar(0, 0, 255), -1);
@@ -113,22 +113,23 @@ int main(int argc, char *argv[]) {
       circle(frame, lastcorners[53], 5, Scalar(255, 255, 0), -1);
 
       // draw the axes
-      vector<Point2f> axisPoints;
-      vector<Point3f> axisPoints3D = {Point3f(0, 0, 0), Point3f(1, 0, 0),
-                                      Point3f(0, 1, 0), Point3f(0, 0, 1)};
-      projectPoints(axisPoints3D, rvecs, tvecs, cameraMatrix, distCoeffs,
-                    axisPoints);
-      line(frame, axisPoints[0], axisPoints[1], Scalar(0, 0, 255), 2);
-      putText(frame, "X", axisPoints[1], FONT_HERSHEY_SIMPLEX, 0.5,
-              Scalar(0, 0, 255), 1, 8);
-      line(frame, axisPoints[0], axisPoints[2], Scalar(0, 255, 0), 2);
-      putText(frame, "Y", axisPoints[2], FONT_HERSHEY_SIMPLEX, 0.5,
-              Scalar(0, 255, 0), 1, 8);
-      line(frame, axisPoints[0], axisPoints[3], Scalar(255, 0, 0), 2);
-      putText(frame, "Z", axisPoints[3], FONT_HERSHEY_SIMPLEX, 0.5,
-              Scalar(255, 0, 0), 1, 8);
+      // vector<Point2f> axisPoints;
+      // vector<Point3f> axisPoints3D = {Point3f(0, 0, 0), Point3f(1, 0, 0),
+      //                                 Point3f(0, 1, 0), Point3f(0, 0, 1)};
+      // projectPoints(axisPoints3D, rvecs, tvecs, cameraMatrix, distCoeffs,
+      //               axisPoints);
+      // line(frame, axisPoints[0], axisPoints[1], Scalar(0, 0, 255), 2);
+      // putText(frame, "X", axisPoints[1], FONT_HERSHEY_SIMPLEX, 0.5,
+      //         Scalar(0, 0, 255), 1, 8);
+      // line(frame, axisPoints[0], axisPoints[2], Scalar(0, 255, 0), 2);
+      // putText(frame, "Y", axisPoints[2], FONT_HERSHEY_SIMPLEX, 0.5,
+      //         Scalar(0, 255, 0), 1, 8);
+      // line(frame, axisPoints[0], axisPoints[3], Scalar(255, 0, 0), 2);
+      // putText(frame, "Z", axisPoints[3], FONT_HERSHEY_SIMPLEX, 0.5,
+      //         Scalar(255, 0, 0), 1, 8);
 
       // draw a star on the chessboard
+
       vector<Point2f> starPoints;
       vector<Point3f> starPoints3D = {
           Point3f(4, -1, 0), Point3f(4, -1, 2), Point3f(2, -2, 0),

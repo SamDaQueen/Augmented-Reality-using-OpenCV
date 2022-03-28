@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
   VideoCapture *capdev;
 
   // open the video device
-  capdev = new VideoCapture(1);
+  capdev = new VideoCapture(2);
   if (!capdev->isOpened()) {
     printf("Unable to open video device\n");
     return (-1);
@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
       // add corner to list of corners
       allcorners.push_back(vector<Point2f>(lastcorners));
       // print number of frames saved
-      printf("Saving frame %d\n", allcorners.size());
+      // printf("Saving frame %d\n", allcorners.size());
       drawChessboardCorners(frame, Size(9, 6), lastcorners, true);
       string path = "data/image_" + to_string(allcorners.size()) + ".jpg ";
       imwrite(path, frame);
@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
 
       // callibrate the camera if at least 5 calibration frames exist
       if (allcorners.size() > 5) {
-        cout << "Calibrating the camera..." << endl;
+        // cout << "Calibrating the camera..." << endl;
 
         RPerror = calibrateCamera(allpoints, allcorners, refS, cameraMatrix,
                                   distCoeffs, rvecs, tvecs, 0);
@@ -97,7 +97,7 @@ int main(int argc, char *argv[]) {
     } else if (key == 'w' && allcorners.size() > 5) {
       // write the parameters to a csv file
       cout << "Writing parameters to csv file..." << endl;
-      writeParametersToCSV(cameraMatrix, distCoeffs, rvecs, tvecs);
+      writeParametersToCSV(cameraMatrix, distCoeffs);
     }
 
     if (cornersExist) {

@@ -9,6 +9,7 @@ link_libraries(${OpenCV_LIBS})
 add_subdirectory(include)
 add_executable(calibrate_camera ./src/calibrate_camera.cpp)
 add_executable(create_object ./src/create_object.cpp)
+add_executable(harris_corners ./src/harris_corners.cpp)
 
 target_link_libraries(calibrate_camera Calibration)
 target_include_directories(calibrate_camera PUBLIC
@@ -17,6 +18,11 @@ target_include_directories(calibrate_camera PUBLIC
 
 target_link_libraries(create_object Calibration)
 target_include_directories(create_object PUBLIC
+"${PROJECT_BINARY_DIR}"
+"${PROJECT_SOURCE_DIR}/include")
+
+target_link_libraries(harris_corners Calibration)
+target_include_directories(harris_corners PUBLIC
 "${PROJECT_BINARY_DIR}"
 "${PROJECT_SOURCE_DIR}/include")
 
